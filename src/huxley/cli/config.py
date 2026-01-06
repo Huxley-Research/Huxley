@@ -66,8 +66,8 @@ class ConfigManager:
             "env_var": "COHERE_API_KEY",
             "models": [
                 "command-a-03-2025",
-                "command-a-reasoning",
-                "command-a-vision",
+                "command-a-reasoning-08-2025",
+                "command-a-vision-07-2025",
             ],
             "url": "https://dashboard.cohere.com/api-keys",
             "compatible": False,

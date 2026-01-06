@@ -362,7 +362,7 @@ vector:
 | OpenAI | gpt-5.2-pro, gpt-5.2, gpt-4 |
 | Google | gemini-3-pro, gemini-3-flash |
 | xAI | grok-4 |
-| Cohere | command-a-03-2025, command-a-reasoning, command-a-vision |
+| Cohere | command-a-03-2025, command-a-reasoning-08-2025, command-a-vision-07-2025 |
 
 ---
 
@@ -516,7 +516,7 @@ Each model is scored on multiple dimensions:
 | claude-4.5-opus | 0.98 | 0.96 | 0.95 | 0.94 | 0.3 | 1.0 |
 | claude-4.5-sonnet | 0.93 | 0.92 | 0.88 | 0.92 | 0.7 | 0.5 |
 | gpt-5.2-pro | 0.95 | 0.94 | 0.90 | 0.92 | 0.5 | 0.8 |
-| command-a-reasoning | 0.92 | 0.85 | 0.82 | 0.88 | 0.4 | 0.45 |
+| command-a-reasoning-08-2025 | 0.92 | 0.85 | 0.82 | 0.88 | 0.4 | 0.45 |
 | gemini-3-flash | 0.80 | 0.78 | 0.75 | 0.82 | 0.95 | 0.15 |
 
 ### Cost Tiers

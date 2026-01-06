@@ -45,8 +45,8 @@ logger = get_logger(__name__)
 MODEL_CONTEXT_WINDOWS: dict[str, int] = {
     "command-a-03-2025": 256000,
     "command-a": 256000,
-    "command-a-reasoning": 256000,
-    "command-a-vision": 256000,
+    "command-a-reasoning-08-2025": 256000,
+    "command-a-vision-07-2025": 256000,
     "command-r-plus": 128000,
     "command-r": 128000,
     "command-r7b": 128000,

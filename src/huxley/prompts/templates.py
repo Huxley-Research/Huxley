@@ -778,7 +778,7 @@ class CommandAReasoningPrompt(BaseSystemPrompt):
     """
     
     model_family = "cohere"
-    model_name = "command-a-reasoning"
+    model_name = "command-a-reasoning-08-2025"
     
     def generate(self, context: PromptContext) -> str:
         tools_section = self._format_tools(context.available_tools)
@@ -872,7 +872,7 @@ class CommandAVisionPrompt(BaseSystemPrompt):
     """
     
     model_family = "cohere"
-    model_name = "command-a-vision"
+    model_name = "command-a-vision-07-2025"
     
     def generate(self, context: PromptContext) -> str:
         tools_section = self._format_tools(context.available_tools)
@@ -986,9 +986,9 @@ MODEL_PROMPT_MAP: dict[str, type[BaseSystemPrompt]] = {
     # Command A variants (Cohere)
     "command-a": CommandAPrompt,
     "command-a-03-2025": CommandAPrompt,
-    "command-a-reasoning": CommandAReasoningPrompt,
+    "command-a-reasoning-08-2025": CommandAReasoningPrompt,
     "command-a-reason": CommandAReasoningPrompt,
-    "command-a-vision": CommandAVisionPrompt,
+    "command-a-vision-07-2025": CommandAVisionPrompt,
     "command-r-plus": CommandAPrompt,
     "command-r": CommandAPrompt,
 }

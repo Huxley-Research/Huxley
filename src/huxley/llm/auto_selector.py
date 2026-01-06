@@ -171,9 +171,9 @@ MODEL_CAPABILITIES: dict[str, ModelCapabilities] = {
         cost=35,
         best_for=[TaskType.RESEARCH, TaskType.TOOL_USE],
     ),
-    "command-a-reasoning": ModelCapabilities(
+    "command-a-reasoning-08-2025": ModelCapabilities(
         provider="cohere",
-        model="command-a-reasoning",
+        model="command-a-reasoning-08-2025",
         reasoning=90,
         coding=80,
         creative=75,
@@ -184,9 +184,9 @@ MODEL_CAPABILITIES: dict[str, ModelCapabilities] = {
         cost=45,
         best_for=[TaskType.REASONING, TaskType.RESEARCH],
     ),
-    "command-a-vision": ModelCapabilities(
+    "command-a-vision-07-2025": ModelCapabilities(
         provider="cohere",
-        model="command-a-vision",
+        model="command-a-vision-07-2025",
         reasoning=80,
         coding=70,
         creative=80,
