@@ -1,0 +1,121 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "huxley"
+version = "0.6.0"
+description = "Agentic, model-agnostic biological intelligence framework"
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.11"
+authors = [
+    { name = "Huxley Contributors" }
+]
+keywords = ["ai", "biology", "agents", "llm", "infrastructure"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+
+dependencies = [
+    "fastapi>=0.109.0",
+    "uvicorn[standard]>=0.27.0",
+    "httpx>=0.26.0",
+    "pydantic>=2.5.0",
+    "pydantic-settings>=2.1.0",
+    "click>=8.1.0",
+    "rich>=13.7.0",
+    "structlog>=24.1.0",
+    "openai>=1.10.0",
+    "redis>=5.0.0",
+    "sqlalchemy>=2.0.0",
+    "alembic>=1.13.0",
+    "aiosqlite>=0.19.0",
+    "asyncpg>=0.29.0",
+    "tenacity>=8.2.0",
+    "orjson>=3.9.0",
+    "python-ulid>=2.2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.23.0",
+    "pytest-cov>=4.1.0",
+    "mypy>=1.8.0",
+    "ruff>=0.1.0",
+    "pre-commit>=3.6.0",
+]
+gpu = [
+    "torch>=2.1.0",
+    "transformers>=4.36.0",
+]
+bio = [
+    "biopython>=1.83",
+]
+chemistry = [
+    "rdkit>=2023.9.1",
+]
+all = [
+    "biopython>=1.83",
+    "rdkit>=2023.9.1",
+    "torch>=2.1.0",
+    "transformers>=4.36.0",
+]
+
+[project.scripts]
+huxley = "huxley.cli.entry:main"
+
+[project.urls]
+Repository = "https://github.com/huxley-bio/huxley"
+Documentation = "https://huxley.bio/docs"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/huxley"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    "/tests",
+]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # pyflakes
+    "I",      # isort
+    "B",      # flake8-bugbear
+    "C4",     # flake8-comprehensions
+    "UP",     # pyupgrade
+    "ARG",    # flake8-unused-arguments
+    "SIM",    # flake8-simplify
+]
+ignore = ["E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["huxley"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_return_any = true
+warn_unused_ignores = true
+disallow_untyped_defs = true
+plugins = ["pydantic.mypy"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+addopts = "-ra -q"
