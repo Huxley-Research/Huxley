@@ -18,7 +18,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 
 # Copy project files
-COPY pyproject.toml poetry.lock* README.md* ./
+COPY pyproject.toml ./
+COPY poetry.lock* ./
+COPY README.md ./
 COPY src ./src
 
 # Install Python dependencies
