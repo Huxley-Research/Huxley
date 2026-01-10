@@ -20,7 +20,6 @@ WORKDIR /app
 # Copy project files
 COPY pyproject.toml poetry.lock* ./
 COPY src ./src
-COPY tests ./tests
 
 # Install Python dependencies
 RUN pip install --upgrade pip setuptools && \

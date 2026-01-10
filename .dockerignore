@@ -17,12 +17,10 @@ venv
 *.log
 .idea
 .vscode
-poetry.lock
 *.pyc
 .coverage
 htmlcov
 .tox
-tests/
 docs/
 README.md
 LICENSE
