@@ -22,11 +22,9 @@ COPY pyproject.toml poetry.lock* README.md* ./
 COPY src ./src
 
 # Install Python dependencies
-RUN pip install --upgrade pip setuptools && \
-    pip install -e . --no-build-isolation
-
-# Install optional dependencies for full functionality
-RUN pip install anthropic cohere google-generativeai
+RUN pip install --upgrade pip setuptools hatchling && \
+    pip install . && \
+    pip install anthropic cohere google-generativeai
 
 # Development stage (includes dev tools)
 FROM base as development
