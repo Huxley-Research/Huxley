@@ -56,6 +56,8 @@ MODEL_CONTEXT_WINDOWS: dict[str, int] = {
     "gpt-4o-mini": 128000,
     "gpt-3.5-turbo": 16385,
     "gpt-3.5-turbo-16k": 16385,
+    # OpenRouter models
+    "prime-intellect/intellect-3": 256000,
 }
 
 

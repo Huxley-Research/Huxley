@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huxley Onboarding - Setup</title>
+    <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="onboarding">
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <h1>🧬 Huxley</h1>
+                <p>Biological Computational Engine</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Step 1: Inference Mode Selection -->
+            <section id="step-mode" class="step active">
+                <div class="step-content">
+                    <h2>How would you like to run Huxley?</h2>
+                    <p class="subtitle">Choose between local model inference or cloud API services.</p>
+                    
+                    <div class="options-grid">
+                        <!-- Local Option -->
+                        <div class="option-card" id="option-local">
+                            <div class="option-icon">🖥️</div>
+                            <h3>Local Models</h3>
+                            <p class="option-desc">Run models locally using Ollama</p>
+                            <ul class="option-features">
+                                <li>✓ No API key required</li>
+                                <li>✓ Full privacy</li>
+                                <li>✓ Offline capability</li>
+                                <li>⚠ Requires GPU (recommended)</li>
+                            </ul>
+                            <button class="btn btn-primary" onclick="selectMode('local')">
+                                Choose Local
+                            </button>
+                        </div>
+
+                        <!-- API Option -->
+                        <div class="option-card" id="option-api">
+                            <div class="option-icon">☁️</div>
+                            <h3>Cloud APIs</h3>
+                            <p class="option-desc">Use OpenAI, Claude, Gemini, and more</p>
+                            <ul class="option-features">
+                                <li>✓ Latest models</li>
+                                <li>✓ No GPU required</li>
+                                <li>✓ Multi-provider support</li>
+                                <li>⚠ Requires API key</li>
+                            </ul>
+                            <button class="btn btn-primary" onclick="selectMode('api')">
+                                Choose Cloud APIs
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 2: API Provider Configuration -->
+            <section id="step-providers" class="step hidden">
+                <div class="step-content">
+                    <h2>Configure API Providers</h2>
+                    <p class="subtitle">Add your API keys. You can configure multiple providers.</p>
+                    
+                    <div id="providers-list" class="providers-list"></div>
+                    
+                    <div class="step-actions">
+                        <button class="btn btn-secondary" onclick="goBack()">Back</button>
+                        <button class="btn btn-primary" onclick="nextStep('models')">
+                            Continue
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 3: Local Setup -->
+            <section id="step-local-setup" class="step hidden">
+                <div class="step-content">
+                    <h2>Setup Local Models</h2>
+                    <p class="subtitle">Configure Ollama for local model inference.</p>
+                    
+                    <!-- Hardware Information -->
+                    <div id="hardware-info" class="hardware-info">
+                        <h3>🖥️ System Hardware</h3>
+                        <div class="hardware-grid">
+                            <div class="hw-item">
+                                <span class="hw-label">CPU:</span>
+                                <span class="hw-value" id="hw-cpu">Detecting...</span>
+                            </div>
+                            <div class="hw-item">
+                                <span class="hw-label">RAM:</span>
+                                <span class="hw-value" id="hw-ram">Detecting...</span>
+                            </div>
+                            <div class="hw-item">
+                                <span class="hw-label">GPU:</span>
+                                <span class="hw-value" id="hw-gpu">Detecting...</span>
+                            </div>
+                            <div class="hw-item">
+                                <span class="hw-label">VRAM:</span>
+                                <span class="hw-value" id="hw-vram">Detecting...</span>
+                            </div>
+                        </div>
+                        <div id="hw-recommendation" class="hw-recommendation"></div>
+                    </div>
+
+                    <!-- Ollama Installation Status -->
+                    <div id="ollama-status" class="ollama-status">
+                        <h3>📦 Ollama Installation</h3>
+                        <div id="ollama-check" class="status-check">
+                            <span class="status-indicator">⏳</span>
+                            <span>Checking Ollama installation...</span>
+                        </div>
+                        <div id="ollama-install-guide" class="install-guide hidden"></div>
+                    </div>
+                    
+                    <div class="local-setup-form">
+                        <h3>Ollama Configuration</h3>
+                        
+                        <div class="form-group">
+                            <label>Ollama Server Address</label>
+                            <input type="text" id="ollama-host" value="http://localhost:11434" 
+                                   placeholder="http://localhost:11434">
+                            <button class="btn btn-secondary" style="margin-top: 8px;" onclick="testOllamaConnection()">
+                                🔌 Test Connection
+                            </button>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Select Model</label>
+                            <div id="ollama-models" class="models-grid"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="step-actions">
+                        <button class="btn btn-secondary" onclick="goBack()">Back</button>
+                        <button class="btn btn-primary" onclick="nextStep('database')">
+                            Continue
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 4: Model Selection -->
+            <section id="step-models" class="step hidden">
+                <div class="step-content">
+                    <h2>Select Default Model</h2>
+                    <p class="subtitle">Choose which model to use by default.</p>
+                    
+                    <div id="models-list" class="models-list"></div>
+                    
+                    <div class="step-actions">
+                        <button class="btn btn-secondary" onclick="goBack()">Back</button>
+                        <button class="btn btn-primary" onclick="nextStep('database')">
+                            Continue
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 5: Database Configuration -->
+            <section id="step-database" class="step hidden">
+                <div class="step-content">
+                    <h2>Database Configuration</h2>
+                    <p class="subtitle">Choose where to store conversation history and data.</p>
+                    
+                    <div class="db-options">
+                        <div class="db-option">
+                            <input type="radio" name="db-driver" value="sqlite" checked 
+                                   onchange="updateDbForm()">
+                            <label>SQLite (Embedded)</label>
+                            <p class="option-desc">Good for development and single-machine deployments</p>
+                        </div>
+
+                        <div class="db-option">
+                            <input type="radio" name="db-driver" value="postgresql" 
+                                   onchange="updateDbForm()">
+                            <label>PostgreSQL (Recommended)</label>
+                            <p class="option-desc">Better for multi-instance and production deployments</p>
+                        </div>
+                    </div>
+
+                    <div id="db-form" class="db-form"></div>
+                    
+                    <div class="step-actions">
+                        <button class="btn btn-secondary" onclick="goBack()">Back</button>
+                        <button class="btn btn-primary" onclick="nextStep('complete')">
+                            Complete Setup
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 6: Completion -->
+            <section id="step-complete" class="step hidden">
+                <div class="step-content completion-screen">
+                    <div class="completion-icon">✅</div>
+                    <h2>Setup Complete!</h2>
+                    <p class="subtitle">Huxley is ready to use.</p>
+                    
+                    <div class="next-steps">
+                        <h3>What's Next?</h3>
+                        <ul>
+                            <li>
+                                <strong>API Server:</strong> 
+                                <a href="http://localhost:8000/docs" target="_blank">
+                                    http://localhost:8000/docs
+                                </a>
+                            </li>
+                            <li>
+                                <strong>Documentation:</strong>
+                                <a href="https://github.com/Huxley-Research/Huxley" target="_blank">
+                                    GitHub Repository
+                                </a>
+                            </li>
+                            <li>
+                                <strong>Try a test:</strong>
+                                <code>huxley chat</code>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="closeOnboarding()">
+                        Start Using Huxley
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <!-- Progress Indicator -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+
+        <!-- Status Messages -->
+        <div id="status-message" class="status-message hidden"></div>
+    </div>
+
+    <script src="/assets/app.js"></script>
+</body>
+</html>

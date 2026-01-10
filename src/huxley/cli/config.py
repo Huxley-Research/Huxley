@@ -81,6 +81,7 @@ class ConfigManager:
                 "openai/gpt-5.2",
                 "google/gemini-3-flash",
                 "xai/grok-4",
+                "prime-intellect/intellect-3",
             ],
             "url": "https://openrouter.ai/keys",
             "compatible": True,

@@ -212,6 +212,22 @@ MODEL_CAPABILITIES: dict[str, ModelCapabilities] = {
         cost=55,
         best_for=[TaskType.RESEARCH, TaskType.TOOL_USE, TaskType.CREATIVE],
     ),
+    
+    # Prime Intellect (via OpenRouter)
+    "intellect-3": ModelCapabilities(
+        provider="openrouter",
+        model="prime-intellect/intellect-3",
+        reasoning=92,
+        coding=88,
+        creative=85,
+        tool_use=90,
+        speed=60,
+        supports_vision=False,
+        supports_reasoning_mode=True,
+        context_window=256000,
+        cost=42,
+        best_for=[TaskType.REASONING, TaskType.CODING, TaskType.RESEARCH],
+    ),
 }
 
 

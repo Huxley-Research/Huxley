@@ -1,0 +1,101 @@
+version: '3.9'
+
+services:
+  # PostgreSQL database for Huxley memory and history
+  postgres:
+    image: postgres:15-alpine
+    container_name: huxley-postgres
+    environment:
+      POSTGRES_DB: huxley
+      POSTGRES_USER: huxley
+      POSTGRES_PASSWORD: huxley_default
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U huxley"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis cache for task distribution and caching
+  redis:
+    image: redis:7-alpine
+    container_name: huxley-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Huxley API Server with onboarding
+  huxley:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: onboarding
+    container_name: huxley-app
+    environment:
+      HUXLEY_ENV: production
+      HUXLEY_DEBUG: "false"
+      HUXLEY_LOG_LEVEL: INFO
+      HUXLEY_SERVER_HOST: 0.0.0.0
+      HUXLEY_SERVER_PORT: 8000
+      HUXLEY_DB_DRIVER: postgresql
+      HUXLEY_DB_HOST: postgres
+      HUXLEY_DB_PORT: 5432
+      HUXLEY_DB_USERNAME: huxley
+      HUXLEY_DB_PASSWORD: huxley_default
+      HUXLEY_DB_DATABASE: huxley
+      HUXLEY_REDIS_HOST: redis
+      HUXLEY_REDIS_PORT: 6379
+      # Ports for the onboarding WebUI
+      WEBUI_HOST: 0.0.0.0
+      WEBUI_PORT: 3000
+    ports:
+      - "8000:8000"  # API Server
+      - "3000:3000"  # WebUI Onboarding
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./src:/app/src
+      - huxley_data:/home/huxley/.huxley
+    networks:
+      - huxley-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Optional: Ollama service for local model inference
+  # Uncomment to enable local model support
+  # ollama:
+  #   image: ollama/ollama:latest
+  #   container_name: huxley-ollama
+  #   ports:
+  #     - "11434:11434"
+  #   volumes:
+  #     - ollama_data:/root/.ollama
+  #   environment:
+  #     OLLAMA_HOST: 0.0.0.0:11434
+  #   networks:
+  #     - huxley-network
+
+volumes:
+  postgres_data:
+  redis_data:
+  huxley_data:
+  # ollama_data:
+
+networks:
+  huxley-network:
+    driver: bridge
