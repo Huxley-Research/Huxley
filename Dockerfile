@@ -23,8 +23,7 @@ COPY src ./src
 
 # Install Python dependencies
 RUN pip install --upgrade pip setuptools && \
-    pip install hatchling && \
-    pip install -e .
+    pip install -e . --no-build-isolation
 
 # Install optional dependencies for full functionality
 RUN pip install anthropic cohere google-generativeai
