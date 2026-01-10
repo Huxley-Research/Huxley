@@ -1,5 +1,5 @@
 # Multi-stage build for Huxley with optional local model support
-FROM python:3.11-slim as base
+from python:3.11-slim as base
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \
@@ -29,12 +29,12 @@ RUN pip install --upgrade pip setuptools hatchling && \
     pip install anthropic cohere google-generativeai
 
 # Development stage (includes dev tools)
-FROM base as development
+from base as development
 
 RUN pip install -e ".[dev]"
 
 # Production stage (minimal, API-focused)
-FROM base as production
+from base as production
 
 # Create non-root user for security
 RUN useradd -m -u 1000 huxley && \
@@ -49,7 +49,7 @@ EXPOSE 8000
 CMD ["python", "-m", "huxley.docker.onboarding"]
 
 # Onboarding stage (interactive setup)
-FROM base as onboarding
+from base as onboarding
 
 RUN pip install flask flask-cors python-dotenv
 
