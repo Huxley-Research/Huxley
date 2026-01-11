@@ -57,6 +57,10 @@ RUN pip install flask flask-cors python-dotenv
 COPY docker-entrypoint.sh /app/docker-entrypoint.sh
 RUN chmod +x /app/docker-entrypoint.sh
 
+# Copy WebUI assets (static files and templates)
+COPY src/huxley/docker/static /app/static
+COPY src/huxley/docker/templates /app/templates
+
 # Create non-root user
 RUN useradd -m -u 1000 huxley && \
     chown -R huxley:huxley /app
@@ -65,6 +69,9 @@ USER huxley
 
 # Expose WebUI and API ports
 EXPOSE 3000 8000
+
+# Start the onboarding WebUI
+CMD ["python", "-m", "huxley.docker.onboarding"]
 
 # Start with entrypoint
 ENTRYPOINT ["/app/docker-entrypoint.sh"]
